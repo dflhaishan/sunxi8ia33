@@ -21,3 +21,19 @@
 
 # backup
 - backup files, such as boot and u-boot-sunxi-with-spl.bin, is published by official
+
+# output 
+1. u-boot-sunxi-with-spl
+> Transfer to an (micro)SD card (see below for more details)::
+```bash
+  $ sudo dd if=u-boot-sunxi-with-spl.bin of=/dev/sdX bs=8k seek=1
+```
+> Boot and enjoy!
+
+> **note**::
+  The traditional SD card location the Allwinner BootROM loads from is 8KB
+  (sector 16). This works fine with the old MBR partitioning scheme, which most
+  SD cards come formatted with. However this is in the middle of a potential
+  GPT partition table, which will become invalid in this step. Newer SoCs
+  (starting with the H3 from late 2014) also support booting from 128KB, which
+  is beyond even a GPT and thus a safer location.
