@@ -4,7 +4,7 @@
 2. mail400mp2 gpu, support opengl es 2.0 / openvg 1.1
 3. sdram 1GB
 3. sd and emmc
-4. a33 is a16, there is no difference between them
+4. a33 is r16, there is no difference between them
 5. ...
 
 # uboot
