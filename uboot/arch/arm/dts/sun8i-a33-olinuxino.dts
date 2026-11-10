@@ -215,11 +215,14 @@
 };
 
 &usb_power_supply {
+    compatible = "x-powers,axp223-usb-power-supply";
 	status = "okay";
 };
 
 &usbphy {
-	usb0_id_det-gpios = <&pio 1 3 GPIO_ACTIVE_HIGH>; /* PB3 */
+    pinctrl-names = "default";
+    pinctrl-0 = <&usb0_id_detect_pin>;
+	usb0_id_det-gpios = <&r_pio 0 4 GPIO_ACTIVE_HIGH>; /* PL4 */
 	usb0_vbus_power-supply = <&usb_power_supply>;
 	usb0_vbus-supply = <&reg_drivevbus>;
 	status = "okay";

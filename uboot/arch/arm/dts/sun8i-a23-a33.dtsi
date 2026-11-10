@@ -852,6 +852,12 @@
 				pins = "PL2", "PL3";
 				function = "s_uart";
 			};
+
+			usb0_id_detect_pin:  usb0-id-detect-pin {
+				pins = "PL4";
+				function = "gpio_in";
+				bias-pull-up;
+			};
 		};
 
 		r_rsb: rsb@1f03400 {
