@@ -21,6 +21,7 @@
 
 # backup
 - backup files, such as boot and u-boot-sunxi-with-spl.bin, is published by official
+- uboot/scripts/dtc/dtc -I dtb -O dts -o sun8i-r16-clockworkpi-cpi3.dts sun8i-r16-clockworkpi-cpi3.dtb
 
 # output 
 1. u-boot-sunxi-with-spl
