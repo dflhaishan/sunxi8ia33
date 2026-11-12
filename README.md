@@ -7,6 +7,11 @@
 4. a33 is r16, there is no difference between them
 5. ...
 
+# kernel
+1. linux-5.4.16
+2. git apply cpi-5.4.16.patch
+3. mkimage -A arm -O linux -T kernel -C none -a 0x40008000 -e 0x40008000 -n "Linux kernel" -d arch/arm/boot/zImage uImage
+
 # uboot
 1. u-boot v2026.10
 2. A33-OLinuXino_defconfig -> gameshell_sunxi8i_a16_defconfig
@@ -84,6 +89,8 @@
 # bootstrap U-Boot by just providing our venerable u-boot-sunxi-with-spl.bin
 ./sunxi-fel uboot u-boot-sunxi-with-spl.bin
 ```
+3. wolfallein
+- patch for kernel cpi-5.4.16.patch
 
 # official
 1. GameShell(https://github.com/clockworkpi/GameShell)
