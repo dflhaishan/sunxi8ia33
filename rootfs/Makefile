@@ -1,0 +1,19 @@
+ROOTFS_DIR=$(shell pwd)
+BUILDROOT_VER ?= buildroot-2023.02.6
+BUILDROOT_DIR := $(ROOTFS_DIR)/buildroot
+BUILDROOT_DEFCONFIG=gameshell_sunxi8i_a16_defconfig
+ROOTFS_OUT_DIR:=$(ROOTFS_DIR)/out/
+
+prepare:
+	test -d $(ROOTFS_OUT_DIR) || mkdir -p $(ROOTFS_OUT_DIR)
+
+rootfs:prepare
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) $(BUILDROOT_DEFCONFIG) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	$(BUILDROOT_DIR)/buildroot_mirror_select.sh $(BUILDROOT_DIR)/$(BUILDROOT_VER)/.config
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) source -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -j$(nproc) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	tar xf $(BUILDROOT_DIR)/$(BUILDROOT_VER)/output/images/rootfs.tar -C $(ROOTFS_OUT_DIR)
+
+distclean:
+	test ! -d $(ROOTFS_OUT_DIR) || rm -rf $(ROOTFS_OUT_DIR)
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) distclean -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
