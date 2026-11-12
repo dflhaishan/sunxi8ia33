@@ -1,2 +1,4 @@
 backup/rootfs.tar.bz2
 tools/linux-5.4.16.tar.gz
+rootfs/buildroot/buildroot-2023.02.6/
+rootfs/out/
