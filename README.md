@@ -21,6 +21,7 @@
 >> mask ROM of most Allwinner SoCs. It allows to bootstrap a board solely
 >> by using the USB-OTG interface and a host port on another computer.
 >> These tools include sunxi-bootinfo, sunx-fel, sunxi-fexc, sunxi-pio.
+>> See also tools/sunxi/sunxi-tools-1.4/README.md
 ```bash
 # use "sunxi-fel" to access the board, This should give you an output starting with: AWUSBFEX soc=00001667(A33)...
 ./sunxi-fel ver -v -p
