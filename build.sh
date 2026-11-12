@@ -53,10 +53,10 @@ function build_uboot() {
 function build_kernel() {
 	echo "============Start building kernel============"
 	echo "CROSS_COMPILE=arm-none-linux-gnueabihf-"
-    echo "imx_v7_defconfig"
+    echo "clockworkpi_cpi3_defconfig"
 	echo "========================================="
 
-    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- imx_v7_defconfig
+    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- clockworkpi_cpi3_defconfig
     make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- all -j$(nproc)
 }
 
