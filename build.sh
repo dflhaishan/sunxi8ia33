@@ -33,8 +33,10 @@ function usage() {
 	echo "Usage: build.sh [OPTIONS]"
 	echo "Available options:"
 	echo "uboot              -build uboot"
+    echo "kernel             -build kernel"
 	echo ""
 	echo "clean uboot        -clean uboot"
+    echo "clean kernel       -clean kernel"
 	exit 0
 }
 
@@ -48,12 +50,25 @@ function build_uboot() {
     make -C uboot ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- -j$(nproc)
 }
 
+function build_kernel() {
+	echo "============Start building kernel============"
+	echo "CROSS_COMPILE=arm-none-linux-gnueabihf-"
+    echo "imx_v7_defconfig"
+	echo "========================================="
+
+    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- imx_v7_defconfig
+    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- all -j$(nproc)
+}
+
 function build_clean() {
 	param="${1}"
 	msg_info "clean ${param}"
 	case $param in
 	uboot)
 		make -C uboot ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+		;;
+	kernel)
+		make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
 		;;
 	*)
 		msg_warn "clean [$1] not support, ignore"
@@ -68,6 +83,7 @@ option=""
 while [ $# -ne 0 ]; do
     case $1 in 
     uboot) option=build_uboot ;;
+    kernel) option=build_kernel ;;
 	clean)
 		option="build_clean $2"
 		break
