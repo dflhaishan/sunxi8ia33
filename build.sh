@@ -60,6 +60,13 @@ function build_kernel() {
     make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- all -j$(nproc)
 }
 
+function build_rootfs() {
+	echo "============Start building rootfs============"
+	echo "buildroot"
+	echo "========================================="
+    make -C rootfs ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- rootfs
+}
+
 function build_clean() {
 	param="${1}"
 	msg_info "clean ${param}"
@@ -69,6 +76,9 @@ function build_clean() {
 		;;
 	kernel)
 		make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+		;;
+	rootfs)
+		make -C rootfs ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
 		;;
 	*)
 		msg_warn "clean [$1] not support, ignore"
@@ -84,6 +94,7 @@ while [ $# -ne 0 ]; do
     case $1 in 
     uboot) option=build_uboot ;;
     kernel) option=build_kernel ;;
+    rootfs) option=build_rootfs ;;
 	clean)
 		option="build_clean $2"
 		break
