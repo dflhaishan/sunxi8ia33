@@ -67,25 +67,18 @@
 			gpios = <&pio 1 7 GPIO_ACTIVE_LOW>;
 		};
 	};
-
-	reg_vcc5v0: vcc5v0 {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc5v0";
-		regulator-min-microvolt = <0x4c4b40>;
-		regulator-max-microvolt = <0x4c4b40>;
-	};
 };
 
 &codec {
-	status = "okay";
+	status = "disable";
 };
 
 &dai {
-	status = "okay";
+	status = "disable";
 };
 
 &ehci0 {
-	status = "okay";
+	status = "disable";
 };
 
 &mmc0 {
@@ -96,7 +89,7 @@
 };
 
 &ohci0 {
-	status = "okay";
+	status = "disable";
 };
 
 &r_rsb {
@@ -108,7 +101,6 @@
 		interrupt-parent = <&r_intc>;
 		interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
 		eldoin-supply = <&reg_dcdc1>;
-        drivevbus-supply = <&reg_vcc5v0>;
 		x-powers,drive-vbus-en;
 	};
 };
@@ -181,7 +173,7 @@
 
 &reg_drivevbus {
 	regulator-name = "usb0-vbus";
-	status = "okay";
+	status = "disable";
 };
 
 &reg_rtc_ldo {
@@ -204,7 +196,7 @@
 		"Headphone Jack", "HP",
 		"MIC1", "Microphone Jack",
 		"Microphone Jack", "MBIAS";
-	status = "okay";
+	status = "disable";
 };
 
 &uart0 {
@@ -215,12 +207,12 @@
 
 &usb_otg {
 	dr_mode = "otg";
-	status = "okay";
+	status = "disable";
 };
 
 &usb_power_supply {
     compatible = "x-powers,axp223-usb-power-supply";
-	status = "okay";
+	status = "disable";
 };
 
 &usbphy {
@@ -229,5 +221,5 @@
 	usb0_id_det-gpios = <&r_pio 0 4 GPIO_ACTIVE_HIGH>; /* PL4 */
 	usb0_vbus_power-supply = <&usb_power_supply>;
 	usb0_vbus-supply = <&reg_drivevbus>;
-	status = "okay";
+	status = "disable";
 };

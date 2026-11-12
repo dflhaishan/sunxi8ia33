@@ -8,8 +8,6 @@
  partition     0  [ + ]   blk_partition         |   |   |   |-- mmc@1c0f000.blk:1
  partition     1  [ + ]   blk_partition         |   |   |   `-- mmc@1c0f000.blk:2
  bootdev       0  [   ]   mmc_bootdev           |   |   `-- mmc@1c0f000.bootdev
- usb           0  [   ]   sunxi-musb            |   |-- usb@1c19000
- phy           0  [ + ]   sun4i_usb_phy         |   |-- phy@1c19400
  clk           0  [ + ]   sunxi_clk             |   |-- clock@1c20000
  reset         0  [ + ]   sunxi_reset           |   |   `-- reset
  pinctrl       0  [ + ]   sunxi-pinctrl         |   |-- pinctrl@1c20800
@@ -46,27 +44,23 @@
  serial        0  [ + ]   ns16550_serial        |   |-- serial@1c28000
  clk           1  [ + ]   clk_sun6i_rtc         |   |-- rtc@1f00000
  pinctrl       1  [ + ]   sunxi-pinctrl         |   |-- pinctrl@1f02c00
- gpio          9  [ + ]   gpio_sunxi            |   |   |-- pinctrl@1f02c00
- gpio         10  [ + ]   gpio_sunxi            |   |   |   `-- PL
+ gpio          9  [   ]   gpio_sunxi            |   |   |-- pinctrl@1f02c00
+ gpio         10  [   ]   gpio_sunxi            |   |   |   `-- PL
  pinconfig    19  [   ]   pinconfig             |   |   |-- r-i2c-pins
  pinconfig    20  [ + ]   pinconfig             |   |   |-- r-rsb-pins
  pinconfig    21  [   ]   pinconfig             |   |   |-- r-uart-pins
- pinconfig    22  [ + ]   pinconfig             |   |   `-- usb0-id-detect-pin
+ pinconfig    22  [   ]   pinconfig             |   |   `-- usb0-id-detect-pin
  i2c           0  [ + ]   sun8i_rsb             |   `-- rsb@1f03400
  pmic          0  [ + ]   axp_pmic              |       `-- pmic@3a3
- regulator     0  [ + ]   axp_usb_power         |           |-- usb-power
- regulator     1  [ + ]   axp_drivevbus         |           |-- drivevbus
  sysreset      0  [   ]   axp_sysreset          |           `-- axp_sysreset
  nop           0  [   ]   gpio_led_wrap         |-- leds
  led           0  [   ]   gpio_led              |   `-- led
- regulator     2  [   ]   regulator_fixed       |-- vcc5v0
  clk           2  [ + ]   fixed_clock           |-- osc24M-clk
  clk           3  [   ]   fixed_clock           |-- ext-osc32k-clk
  bootstd       0  [   ]   bootstd_drv           |-- bootstd
  bootmeth      0  [   ]   bootmeth_extlinux     |   |-- extlinux
  bootmeth      1  [   ]   bootmeth_efi_mgr      |   |-- efi_mgr
  bootmeth      2  [   ]   bootmeth_efi          |   |-- efi
- bootmeth      3  [   ]   bootmeth_pxe          |   |-- pxe
- bootmeth      4  [   ]   vbe_simple            |   `-- vbe_simple
+ bootmeth      3  [   ]   vbe_simple            |   `-- vbe_simple
  gpio         11  [   ]   gpio_axp              |-- AXP-gpio
  efi           0  [   ]   EFI block driver      `-- efi
