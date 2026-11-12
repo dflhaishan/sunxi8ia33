@@ -11,6 +11,62 @@
 1. u-boot v2026.10
 2. A33-OLinuXino_defconfig -> gameshell_sunxi8i_a16_defconfig
 3. sun8i-a33-olinuxino.dts
+4. bootcmd:
+- bootcmd=run distro_bootcmd
+    - distro_bootcmd=for target in \${boot_targets}; do run bootcmd_${target}; done
+        - boot_targets=fel mmc0
+- bootcmd_fel=if test -n ${fel_booted} && test -n \${fel_scriptaddr}; then echo '(FEL boot)'; source \${fel_scriptaddr}; fi
+- bootcmd_mmc0=devnum=0; run mmc_boot
+- mmc_boot=if mmc dev \${devnum}; then devtype=mmc; run scan_dev_for_boot_part; fi
+- scan_dev_for_boot_part=
+    ```bash
+    if env exists distro_bootpart; then # distro_bootpart=null
+        setenv devplist ${distro_bootpart};
+    else
+        part list ${devtype} ${devnum} -bootable devplist;
+        env exists devplist || setenv devplist 1;
+    fi;
+    for distro_bootpart in ${devplist}; do
+        if fstype ${devtype} ${devnum}:${distro_bootpart} bootfstype; then
+            part uuid ${devtype} ${devnum}:${distro_bootpart} distro_bootpart_uuid;
+            run scan_dev_for_boot;
+        fi;
+    done;
+    setenv devplist
+    ```
+- scan_dev_for_boot=
+    ```bash
+    echo Scanning ${devtype} ${devnum}:${distro_bootpart}...; for prefix in ${boot_prefixes};
+    do run scan_dev_for_extlinux; run scan_dev_for_scripts; done;run scan_dev_for_efi;
+    ```
+- scan_dev_for_extlinux
+    ```bash
+    if test -e ${devtype} ${devnum}:${distro_bootpart} ${prefix}${boot_syslinux_conf}; then echo Found ${prefix}${boot_syslinux_conf}; run boot_extlinux; echo EXTLINUX FAILED: continuing...; fi
+    ```
+- scan_dev_for_scripts
+    ```bash
+    for script in ${boot_scripts}; do if test -e ${devtype} ${devnum}:${distro_bootpart} ${prefix}${script}; then echo Found U-Boot script ${prefix}${script}; run boot_a_script; echo SCRIPT FAILED: continuing...; fi; done
+    ```
+    - ***boot_scripts=boot.scr.uimg boot.scr***
+- scan_dev_for_efi
+    ```bash
+    setenv efi_fdtfile ${fdtfile}; if test -z "${fdtfile}" -a -n "${soc}"; then setenv efi_fdtfile ${soc}-${board}${boardver}.dtb; fi; for prefix in ${efi_dtb_prefixes}; do if test -e ${devtype} ${devnum}:${distro_bootpart} ${prefix}${efi_fdtfile}; then run load_efi_dtb; fi;done;run boot_efi_bootmgr;if test -e ${devtype} ${devnum}:${distro_bootpart} efi/boot/bootarm.efi; then echo Found EFI removable media binary efi/boot/bootarm.efi; run boot_efi_binary; echo EFI LOAD FAILED: continuing...; fi; setenv efi_fdtfile
+    ```
+
+```mermaid
+    flowchart TD
+        A[bootcmd<br>启动入口] --> B[distro_bootcmd<br>遍历启动目标]
+        B --> C[boot_targets 列表<br>如 mmc0, usb0...]
+        C --> D[bootcmd_mmc0<br>设置设备号 devnum=0]
+        D --> E[mmc_boot<br>确认MMC设备可用]
+        E --> F[scan_dev_for_boot_part<br>选择启动分区]
+        F --> G[scan_dev_for_boot<br>在分区内查找启动文件]
+        G --> H{找到启动文件?}
+        H -- extlinux.conf --> I[执行配置文件中的引导指令]
+        H -- boot.scr / boot.scr.uimg --> J[执行脚本内的引导指令]
+        H -- 其他（如EFI） --> K[执行对应引导程序]
+        I & J & K --> L[加载内核与设备树<br>bootz / bootm 启动Linux]
+```
 
 # tool
 1. toolchain 
