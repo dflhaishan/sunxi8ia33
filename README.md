@@ -15,6 +15,18 @@
 # tool
 1. toolchain 
 - gcc-arm-11.2-2022.02-x86_64-arm-none-linux-gnueabihf(https://mirrors.tuna.tsinghua.edu.cn/armbian-releases/_toolchain/)
+2. sunxi-tools
+> FEL boot (USB OTG)
+>> FEL is the name of the Allwinner defined USB boot protocol built in the
+>> mask ROM of most Allwinner SoCs. It allows to bootstrap a board solely
+>> by using the USB-OTG interface and a host port on another computer.
+>> These tools include sunxi-bootinfo, sunx-fel, sunxi-fexc, sunxi-pio.
+```bash
+# use "sunxi-fel" to access the board, This should give you an output starting with: AWUSBFEX soc=00001667(A33)...
+./sunxi-fel ver -v -p
+# bootstrap U-Boot by just providing our venerable u-boot-sunxi-with-spl.bin
+./sunxi-fel uboot u-boot-sunxi-with-spl.bin
+```
 
 # official
 1. GameShell(https://github.com/clockworkpi/GameShell)
