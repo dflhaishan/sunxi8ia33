@@ -19,7 +19,7 @@
 #include <dm/of_access.h>
 #include <linux/err.h>
 #include <linux/sizes.h>
-#define _DEBUG 1
+
 enum {
 	BUF_STEP	= SZ_64K,
 };
@@ -267,7 +267,7 @@ int unflatten_device_tree(const void *blob, struct device_node **mynodes)
 	int start;
 	void *mem;
 
-	debug(" -> unflatten_device_tree() %08x\n", blob);
+	debug(" -> unflatten_device_tree()\n");
 
 	if (!blob) {
 		debug("No device tree pointer\n");
