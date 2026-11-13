@@ -114,3 +114,5 @@
   GPT partition table, which will become invalid in this step. Newer SoCs
   (starting with the H3 from late 2014) also support booting from 128KB, which
   is beyond even a GPT and thus a safer location.
+2. boot.cmd
+- mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "My Boot Script" -d boot.cmd boot.scr
