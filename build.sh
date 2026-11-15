@@ -34,9 +34,11 @@ function usage() {
 	echo "Available options:"
 	echo "uboot              -build uboot"
     echo "kernel             -build kernel"
+    echo "rootfs             -build rootfs"
 	echo ""
 	echo "clean uboot        -clean uboot"
     echo "clean kernel       -clean kernel"
+    echo "clean rootfs       -clean rootfs"
 	exit 0
 }
 
@@ -57,7 +59,7 @@ function build_kernel() {
 	echo "========================================="
 
     make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- clockworkpi_cpi3_defconfig
-    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- all -j$(nproc)
+    make -C linux-5.4.16 ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- menuconfig #all -j$(nproc)
 }
 
 function build_rootfs() {
