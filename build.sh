@@ -45,10 +45,10 @@ function usage() {
 function build_uboot() {
 	echo "============Start building uboot============"
 	echo "CROSS_COMPILE=arm-none-linux-gnueabihf-"
-    echo "gameshell_sunxi8i_a16_defconfig"
+    echo "clockworkpi-cpi3_defconfig"
 	echo "========================================="
 
-    make -C uboot ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- gameshell_sunxi8i_a16_defconfig
+    make -C uboot ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- clockworkpi-cpi3_defconfig
     make -C uboot ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- -j$(nproc)
 }
 
