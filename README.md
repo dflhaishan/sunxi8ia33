@@ -11,6 +11,29 @@
 1. linux-5.4.16
 2. git apply cpi-5.4.16.patch
 3. mkimage -A arm -O linux -T kernel -C none -a 0x40008000 -e 0x40008000 -n "Linux kernel" -d arch/arm/boot/zImage uImage
+4. PS1='\u@\h:\w# '
+5. interface
+    ```bash
+    auto lo
+    iface lo inet loopback
+
+    allow-hotplug usb0
+    auto usb0
+    iface usb0 inet static
+            address 192.168.10.100
+            netmask 255.255.255.0
+            gateway 192.168.10.1
+
+    auto wlan0
+    iface wlan0 inet dhcp
+            pre-up wpa_supplicant -B -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf
+            post-down killall -q wpa_supplicant
+    ```
+6. bluetooth
+    ```bash
+    brcm_patchram_plus --patchram /lib/firmware/brcm/bcm43438a0.hcd \
+                --enable_hci --bd_addr B0:F1:EC:2D:07:5B --no2bytes --tosleep 5000 /dev/ttyS1 &
+    ```
 
 # uboot
 1. u-boot v2026.10
@@ -91,6 +114,10 @@
 ```
 3. wolfallein
 - patch for kernel cpi-5.4.16.patch
+4. brcmfmac
+- for ap6212 config files
+- put /lib/firmware/brcm
+- rename brcmfmac43430a0-sdio.clockwork,clockworkpi-cpi3.txt
 
 # official
 1. GameShell(https://github.com/clockworkpi/GameShell)
