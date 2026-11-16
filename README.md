@@ -132,6 +132,8 @@
 
 # official
 1. GameShell(https://github.com/clockworkpi/GameShell)
+    - Code/bluetooth
+        - patchram for bcm43438a0.hcd
 
 # backup
 - backup files, such as boot and u-boot-sunxi-with-spl.bin, is published by official
