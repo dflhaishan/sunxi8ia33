@@ -45,6 +45,7 @@
     psk=""
     }
     ```
+8. rsync -avz --progress ./updated_dir/ root@<board_ip>:/opt/app/
 
 # uboot
 1. u-boot v2026.10
